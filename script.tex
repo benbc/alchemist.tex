@@ -1,5 +1,15 @@
 \documentclass{memoir}
-\usepackage{hacked}
+\usepackage{dramatist}
+
+\makeatletter
+\def\@character#1#2{%
+  \@namedef{#2}{{\namefont #1}\xspace}
+  \n@me@ppend@nddef{#2}{\@ppendname}{%
+    \item[\speaksfont{#1}\speaksdel]
+  }
+}
+\makeatother
+
 \begin{document}
 
 \Character[Subtle, The Alchemist]{Subtle}{subtle}
@@ -43,6 +53,7 @@
   Your master's worship's house here in the Friars,\\
   For the vacations--\\
 \facespeaks \vinphantom{For the vacations--} Will you be so loud?
+
 \end{drama*}
 
 \end{document}
