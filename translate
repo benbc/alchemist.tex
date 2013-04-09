@@ -17,10 +17,19 @@ def filter_text(lines):
     return lines[start:end+1]
 
 def convert(lines):
-    return map(speech_prefix, lines)
+    return map(compose(speech_prefixes()), lines)
 
-def speech_prefix(line):
-    return line
+def speech_prefixes():
+    def speech_prefix(opts):
+        orig, new = opts
+        return lambda line: re.sub(r'^%s. (.+)$'%orig, r'\\%sspeaks \1'%new, line)
+    return map(speech_prefix,
+               [('DOL', 'dol'),
+                ('FACE', 'face'),
+                ('SUB', 'subtle')])
+
+def compose(funs):
+    return lambda x: reduce(lambda acc, f: f(acc), funs, x)
 
 def add_wrapper(lines):
     return prefix()+lines+suffix()
