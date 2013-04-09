@@ -13,8 +13,8 @@ def translate(lines):
 
 def filter_text(lines):
     start = lines.index('ACT 1. SCENE 1.1.')
-    end = lines.index('[EXEUNT.]')
-    return lines[start:end+1]
+    end = lines.index('*****')
+    return lines[start:end]
 
 def convert(lines):
     return map(compose(speech_prefixes()), lines)
