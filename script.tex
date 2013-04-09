@@ -1,48 +1,6 @@
 \documentclass{memoir}
 \usepackage{dramatist}
-
-\makeatletter
-\@namedef{drama*}{%
-    \@drversetrue
-    \if@poemscol
-        \begin{poem}
-        \setcounter{verselinenumber}{\value{storelineno}}
-        \setcounter{printlineindex}{\value{storeprintlineindex}}
-    \else
-        \begin{verse}
-    \fi
-    \ifx\poemlines\@undefined\else
-        \setcounter{poemline}{\value{storelineno}}
-    \fi
-    \list{}{%
-        \labelwidth\speakswidth
-        \itemindent\speaksindent
-        \itemsep\speechskip
-        \parsep\Dparsep
-        \labelsep\Dlabelsep
-        \let\makelabel\speakslabel}
-}
-\@namedef{enddrama*}{%
-    \endlist
-    \ifx\poemlines\@undefined\else
-        \setcounter{storelineno}{\value{poemline}}
-    \fi
-    \if@poemscol
-        \end{poem}
-        \setcounter{storelineno}{\value{verselinenumber}}
-        \setcounter{storeprintlineindex}{\value{printlineindex}}
-    \else
-        \end{verse}
-    \fi
-    \@drversefalse}
-
-\def\@character#1#2{%
-  \@namedef{#2}{{\namefont #1}\xspace}
-  \n@me@ppend@nddef{#2}{\@ppendname}{%
-    \item[\speaksfont{#1}\speaksdel]
-  }
-}
-\makeatother
+\usepackage{dramatist-mods}
 
 \begin{document}
 
