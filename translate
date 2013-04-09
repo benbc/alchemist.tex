@@ -26,7 +26,15 @@ def speech_prefixes():
     return map(speech_prefix,
                [('DOL', 'dol'),
                 ('FACE', 'face'),
-                ('SUB', 'subtle')])
+                ('SUB', 'subtle'),
+                ('LOVE', 'lovewit'),
+                ('KAS', 'kastril'),
+                ('DRUG', 'drugger'),
+                ('ANA', 'ananias'),
+                ('TRI', 'tribulation'),
+                ('SUR', 'surly'),
+                ('MAM', 'mammon'),
+                ('DAP', 'dapper')])
 
 def compose(funs):
     return lambda x: reduce(lambda acc, f: f(acc), funs, x)
@@ -45,9 +53,19 @@ def prefix():
 
 \begin{document}
 
-\Character[Subtle, The Alchemist]{Subtle}{subtle}
-\Character[Face, The Housekeeper]{Face}{face}
-\Character[Dol Common, Their Colleague]{Dol}{dol}
+\Character[Subtle, the Alchemist]{Subtle}{subtle}
+\Character[Face, the housekeeper]{Face}{face}
+\Character[Dol Common, their colleague]{Dol}{dol}
+\Character[Dapper, a lawyer's clerk]{Dapper}{dapper}
+\Character[Drugger, a tobacco man]{Drugger}{drugger}
+\Character[Lovewit, master of the house]{Lovewit}{lovewit}
+\Character[Sir Epicure Mammon, a knight]{Mammon}{mammon}
+\Character[Pertinax Surly, a gamester]{Surly}{surly}
+\Character[Tribulation Wholesome, a pastor of Amsterdam]{Tribulation}{tribulation}
+\Character[Ananias, a deacon there]{Ananias}{ananias}
+\Character[Kastril, the angry boy]{Kastril}{kastril}
+\Character[Dame Pliant, his sister, a widow]{Pliant}{pliant}
+
 \settowidth{\speakswidth}{\speaksfont{Subtle}\speaksdel\hspace{\Dlabelsep}}
 \setlength\speaksindent{0in}
 
