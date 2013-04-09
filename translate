@@ -1,19 +1,58 @@
 #!/usr/bin/env python
+import re
 import sys
 
 def main():
-    original = read()
-    result = translate(original)
-    write(result)
+    write(translate(read()))
 
 def read():
     return [line.strip() for line in sys.stdin]
 
 def translate(lines):
-    return lines
+    return add_wrapper(convert(filter_text(lines)))
+
+def filter_text(lines):
+    start = lines.index('ACT 1. SCENE 1.1.')
+    end = lines.index('[EXEUNT.]')
+    return lines[start:end+1]
+
+def convert(lines):
+    return map(speech_prefix, lines)
+
+def speech_prefix(line):
+    return line
+
+def add_wrapper(lines):
+    return prefix()+lines+suffix()
 
 def write(lines):
     print('\n'.join(lines))
+
+def prefix():
+    return r'''
+\documentclass{memoir}
+\usepackage{dramatist}
+\usepackage{dramatist-mods}
+
+\begin{document}
+
+\Character[Subtle, The Alchemist]{Subtle}{subtle}
+\Character[Face, The Housekeeper]{Face}{face}
+\Character[Dol Common, Their Colleague]{Dol}{dol}
+\settowidth{\speakswidth}{\speaksfont{Subtle}\speaksdel\hspace{\Dlabelsep}}
+\setlength\speaksindent{0in}
+
+\DramPer
+
+\begin{drama*}
+
+'''.split('\n')
+
+def suffix():
+    return r'''
+\end{drama*}
+\end{document}
+'''.split('\n')
 
 if __name__ == '__main__':
     main()
