@@ -9,7 +9,7 @@ def read():
     return [line.strip() for line in sys.stdin]
 
 def translate(lines):
-    return add_wrapper(convert(filter_text(remove_empty(lines))))
+    return add_wrapper(convert(fold_stage_directions(filter_text(remove_empty(lines)))))
 
 def remove_empty(lines):
     return filter(None, lines)
@@ -19,8 +19,27 @@ def filter_text(lines):
     end = lines.index('*****')
     return lines[start:end]
 
+def fold_stage_directions(lines):
+    result = []
+    in_stage_dir = False
+    stage_dir = None
+    for line in lines:
+        if in_stage_dir:
+            stage_dir.append(line)
+            if ']' in line:
+                result.append(' '.join(stage_dir))
+                in_stage_dir = False
+                stage_dir = None
+        else:
+            if '[' in line and not ']' in line:
+                in_stage_dir = True
+                stage_dir = [line]
+            else:
+                result.append(line)
+    return result
+
 def convert(lines):
-    return map(compose(speech_prefixes()), lines)
+    return map(compose(speech_prefixes()+[stage_direction]), lines)
 
 def speech_prefixes():
     def speech_prefix(opts):
@@ -38,6 +57,9 @@ def speech_prefixes():
                 ('SUR', 'surly'),
                 ('MAM', 'mammon'),
                 ('DAP', 'dapper')])
+
+def stage_direction(line):
+    return re.sub(r'^(.*)\[(.*)\](.*)$', r'\1\\direct*{\2}\3', line)
 
 def compose(funs):
     return lambda x: reduce(lambda acc, f: f(acc), funs, x)
