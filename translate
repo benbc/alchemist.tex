@@ -39,7 +39,10 @@ def fold_stage_directions(lines):
     return result
 
 def convert(lines):
-    return map(compose(speech_prefixes()+[stage_direction]), lines)
+    return map(compose([normalize_prefix_direction_combos]+speech_prefixes()+[stage_direction]), lines)
+
+def normalize_prefix_direction_combos(line):
+    return re.sub(r'^([A-Z]+) \[(.+)\]\.(.*)$', r'\1. [\2]\3', line)
 
 def speech_prefixes():
     def speech_prefix(opts):
