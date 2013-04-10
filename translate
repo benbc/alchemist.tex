@@ -56,7 +56,8 @@ def speech_prefixes():
                 ('TRI', 'tribulation'),
                 ('SUR', 'surly'),
                 ('MAM', 'mammon'),
-                ('DAP', 'dapper')])
+                ('DAP', 'dapper'),
+                ('DAME P', 'pliant')])
 
 def stage_direction(line):
     return re.sub(r'^(.*)\[(.*)\](.*)$', r'\1\\direct*{\2}\3', line)
