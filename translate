@@ -9,7 +9,10 @@ def read():
     return [line.strip() for line in sys.stdin]
 
 def translate(lines):
-    return add_wrapper(convert(filter_text(lines)))
+    return add_wrapper(convert(filter_text(remove_empty(lines))))
+
+def remove_empty(lines):
+    return filter(None, lines)
 
 def filter_text(lines):
     start = lines.index('ACT 1. SCENE 1.1.')
