@@ -39,7 +39,7 @@ def fold_stage_directions(lines):
     return result
 
 def convert(lines):
-    return map(compose([normalize_prefix_direction_combos, fix_broken_prefix]+speech_prefixes()+[stage_direction, verse]), lines)
+    return map(compose([normalize_prefix_direction_combos, fix_broken_prefix]+speech_prefixes()+[stage_direction, verse, acts]), lines)
 
 def normalize_prefix_direction_combos(line):
     return re.sub(r'^([A-Z]+) \[(.+)\]\.(.*)$', r'\1. [\2]\3', line)
@@ -79,6 +79,9 @@ def verse(line):
         return line
     return r'%s\\' % line
 
+def acts(line):
+    return re.sub(r'^ACT [0-9]+\. (.+)$', r'\\act\n\n\1', line)
+
 def compose(funs):
     return lambda x: reduce(lambda acc, f: f(acc), funs, x)
 
@@ -109,12 +112,13 @@ def prefix():
 \Character[Kastril, the angry boy]{Kastril}{kastril}
 \Character[Dame Pliant, his sister, a widow]{Pliant}{pliant}
 \Character[An officer]{Officer 1}{officerone}
-\Character[An officer]{Officer 2}{officertwo}
+\Character[Another officer]{Officer 2}{officertwo}
 
 \settowidth{\speakswidth}{\speaksfont{Tribulation}\speaksdel\hspace{\Dlabelsep}}
 \setlength\speaksindent{0in}
 
 \DramPer
+
 
 \begin{drama*}
 
