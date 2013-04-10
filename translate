@@ -55,12 +55,16 @@ def speech_prefixes():
                 ('LOVE', 'lovewit'),
                 ('KAS', 'kastril'),
                 ('DRUG', 'drugger'),
+                ('NAB', 'drugger'),
                 ('ANA', 'ananias'),
                 ('TRI', 'tribulation'),
                 ('SUR', 'surly'),
                 ('MAM', 'mammon'),
                 ('DAP', 'dapper'),
-                ('DAME P', 'pliant')])
+                ('DAME P', 'pliant'),
+                ('OFFI', 'officerone'),
+                ('1 OFFI', 'officerone'),
+                ('2 OFFI', 'officertwo')])
 
 def stage_direction(line):
     return re.sub(r'^(.*)\[(.*)\](.*)$', r'\1\\direct*{\2}\3', line)
@@ -94,8 +98,10 @@ def prefix():
 \Character[Ananias, a deacon there]{Ananias}{ananias}
 \Character[Kastril, the angry boy]{Kastril}{kastril}
 \Character[Dame Pliant, his sister, a widow]{Pliant}{pliant}
+\Character[An officer]{Officer 1}{officerone}
+\Character[An officer]{Officer 2}{officertwo}
 
-\settowidth{\speakswidth}{\speaksfont{Subtle}\speaksdel\hspace{\Dlabelsep}}
+\settowidth{\speakswidth}{\speaksfont{Tribulation}\speaksdel\hspace{\Dlabelsep}}
 \setlength\speaksindent{0in}
 
 \DramPer
