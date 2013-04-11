@@ -20,20 +20,23 @@ def filter_text(lines):
     return lines[start:end]
 
 def normalize_scene_stage_directions(lines):
-    regex = r"^[A-Z '.,]+$"
+    def has_speech_prefix(line):
+        return any([line.startswith("%s. "%p) for (p, _) in prefix_defs()])
+    def is_stage_direction(line):
+        return not has_speech_prefix(line) and re.match(r"^[A-Z '.,]+$", line)
     result = []
     in_stage_dir = False
     stage_dir = None
     for line in lines:
         if in_stage_dir:
-            if re.match(regex, line):
+            if is_stage_direction(line):
                 stage_dir.append(line)
             else:
                 result.append('[%s]' % ' '.join(stage_dir))
                 in_stage_dir = False
                 stage_dir = None
         else:
-            if re.match(regex, line):
+            if is_stage_direction(line):
                 in_stage_dir = True
                 stage_dir = [line]
             else:
@@ -72,23 +75,25 @@ def speech_prefixes():
     def speech_prefix(opts):
         orig, new = opts
         return lambda line: re.sub(r'^%s. (.+)$'%orig, r'\\%sspeaks \1'%new, line)
-    return map(speech_prefix,
-               [('DOL', 'dol'),
-                ('FACE', 'face'),
-                ('SUB', 'subtle'),
-                ('LOVE', 'lovewit'),
-                ('KAS', 'kastril'),
-                ('DRUG', 'drugger'),
-                ('NAB', 'drugger'),
-                ('ANA', 'ananias'),
-                ('TRI', 'tribulation'),
-                ('SUR', 'surly'),
-                ('MAM', 'mammon'),
-                ('DAP', 'dapper'),
-                ('DAME P', 'pliant'),
-                ('OFFI', 'officerone'),
-                ('1 OFFI', 'officerone'),
-                ('2 OFFI', 'officertwo')])
+    return map(speech_prefix, prefix_defs())
+
+def prefix_defs():
+    return [('DOL', 'dol'),
+            ('FACE', 'face'),
+            ('SUB', 'subtle'),
+            ('LOVE', 'lovewit'),
+            ('KAS', 'kastril'),
+            ('DRUG', 'drugger'),
+            ('NAB', 'drugger'),
+            ('ANA', 'ananias'),
+            ('TRI', 'tribulation'),
+            ('SUR', 'surly'),
+            ('MAM', 'mammon'),
+            ('DAP', 'dapper'),
+            ('DAME P', 'pliant'),
+            ('OFFI', 'officerone'),
+            ('1 OFFI', 'officerone'),
+            ('2 OFFI', 'officertwo')]
 
 def stage_direction(line):
     return re.sub(r'^(.*)\[(.*)\](.*)$', r'\1\\direct*{\2}\3', line)
