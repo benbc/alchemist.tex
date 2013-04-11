@@ -9,7 +9,7 @@ def read():
     return [line.strip() for line in sys.stdin]
 
 def translate(lines):
-    return add_wrapper(convert(fold_stage_directions(filter_text(remove_empty(lines)))))
+    return add_wrapper(convert(fold_stage_directions(normalize_scene_stage_directions(filter_text(remove_empty(lines))))))
 
 def remove_empty(lines):
     return filter(None, lines)
@@ -18,6 +18,27 @@ def filter_text(lines):
     start = lines.index('ACT 1. SCENE 1.1.')
     end = lines.index('*****')
     return lines[start:end]
+
+def normalize_scene_stage_directions(lines):
+    regex = r"^[A-Z '.,]+$"
+    result = []
+    in_stage_dir = False
+    stage_dir = None
+    for line in lines:
+        if in_stage_dir:
+            if re.match(regex, line):
+                stage_dir.append(line)
+            else:
+                result.append('[%s]' % ' '.join(stage_dir))
+                in_stage_dir = False
+                stage_dir = None
+        else:
+            if re.match(regex, line):
+                in_stage_dir = True
+                stage_dir = [line]
+            else:
+                result.append(line)
+    return result
 
 def fold_stage_directions(lines):
     result = []
