@@ -57,13 +57,26 @@ def fold_stage_directions(lines):
     return result
 
 def convert(lines):
-    return map(compose([normalize_prefix_direction_combos, fix_broken_prefix]+speech_prefixes()+[stage_direction, verse, acts, scenes]), lines)
+    return map(compose([normalize_prefix_direction_combos,
+                        fix_broken_prefix]+
+                       fix_insertions()+
+                       speech_prefixes()+
+                       [stage_direction,
+                        verse,
+                        acts,
+                        scenes]),
+               lines)
 
 def normalize_prefix_direction_combos(line):
     return re.sub(r'^([A-Z]+) \[(.+)\]\.(.*)$', r'\1. [\2]\3', line)
 
 def fix_broken_prefix(line):
     return re.sub(r'SUR\.--', r'SUR. --', line)
+
+def fix_insertions():
+    def make_fix(word):
+        return lambda line: re.sub(r'^(.*)\[(%s)\](.*)$'%word, r'\1\2\3', line)
+    return map(make_fix, ['my', 'a'])
 
 def speech_prefixes():
     def speech_prefix(opts):
