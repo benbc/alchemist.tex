@@ -20,27 +20,21 @@ def filter_text(lines):
     return lines[start:end]
 
 def normalize_scene_stage_directions(lines):
-    def has_speech_prefix(line):
-        return any([line.startswith("%s. "%p) for (p, _) in prefix_defs()])
-    def is_stage_direction(line):
-        return not has_speech_prefix(line) and re.match(r"^[A-Z '.,]+$", line)
     result = []
-    in_stage_dir = False
-    stage_dir = None
+    at_scene_start = False
+    stage_dir = []
     for line in lines:
-        if in_stage_dir:
-            if is_stage_direction(line):
+        if at_scene_start:
+            if re.match(r"^[A-Z '.,]+$", line):
                 stage_dir.append(line)
             else:
                 result.append('[%s]' % ' '.join(stage_dir))
-                in_stage_dir = False
-                stage_dir = None
+                at_scene_start = False
+                stage_dir = []
         else:
-            if is_stage_direction(line):
-                in_stage_dir = True
-                stage_dir = [line]
-            else:
-                result.append(line)
+            if re.match(r'^.*SCENE [0-9]+\.[0-9]\.$', line):
+                at_scene_start = True
+            result.append(line)
     return result
 
 def fold_stage_directions(lines):
