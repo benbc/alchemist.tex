@@ -29,6 +29,7 @@ def scene_stage_directions(lines):
                 stage_dir.append(line)
             else:
                 result.append(r'\stagedir{%s}' % ' '.join(stage_dir))
+                result.append(line)
                 at_scene_start = False
                 stage_dir = []
         else:
