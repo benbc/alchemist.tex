@@ -84,13 +84,15 @@ def shared_verse_lines(lines):
         def speech_syllables(speech):
             return sum(map(word_syllables, parse_speech(speech)['words'].split()))
         return sum(map(speech_syllables, verse_line)) > 8
+    def is_same_speaker(line):
+        return is_speech(line) and parse_speech(line)['prefix'] == ''
     result = []
     verse_line = []
     for i in range(len(lines)):
         line = lines[i]
         if is_speech(line):
             verse_line.append(line)
-            if is_complete(verse_line):
+            if is_complete(verse_line) or is_same_speaker(lines[i+1]):
                 result.append(verse_line[0])
                 for j in range(1, len(verse_line)):
                     current = parse_speech(verse_line[j])
