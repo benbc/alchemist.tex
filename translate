@@ -65,10 +65,10 @@ def fold_stage_directions(lines):
 
 def shared_verse_lines(lines):
     def parse_speech(line):
-        m = re.match(r"^(\\[a-z]+) ([A-Za-z.;,' ?!-]+)\\\\$", line)
+        m = re.match(r"^(\\[a-z]+ )?([A-Za-z.;,' ?!-]+)\\\\$", line)
         if not m:
             return None
-        return {'prefix': m.group(1), 'words': m.group(2)}
+        return {'prefix': m.group(1) or '', 'words': m.group(2)}
     def is_speech(line):
         return not not parse_speech(line)
     def is_complete(verse_line):
@@ -86,7 +86,7 @@ def shared_verse_lines(lines):
                 for j in range(1, len(verse_line)):
                     current = parse_speech(verse_line[j])
                     previous = parse_speech(verse_line[j-1])
-                    result.append(r'%s \vinphantom{%s} %s\\' % (current['prefix'], previous['words'], current['words']))
+                    result.append(r'%s\vinphantom{%s} %s\\' % (current['prefix'], previous['words'], current['words']))
                 verse_line = []
         else:
             result.append(line)
