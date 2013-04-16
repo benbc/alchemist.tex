@@ -65,7 +65,7 @@ def fold_stage_directions(lines):
 
 def shared_verse_lines(lines):
     def parse_speech(line):
-        m = re.match(r"^(\\[a-z]+ )?([A-Za-z.;,' ?!-]+)\\\\$", line)
+        m = re.match(r"^(\\[a-z]+ )?([A-Za-z.:;,\"' ?!()-]+)\\\\$", line)
         if not m:
             return None
         return {'prefix': m.group(1) or '', 'words': m.group(2)}
