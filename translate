@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import nltk.corpus
 import re
 import sys
 
@@ -64,6 +65,7 @@ def fold_stage_directions(lines):
     return result
 
 def shared_verse_lines(lines):
+    dictionary = nltk.corpus.cmudict.dict()
     def parse_speech(line):
         m = re.match(r"^(\\[a-z]+ )?([A-Za-z.:;,\"' ?!()-]+)\\\\$", line)
         if not m:
@@ -72,9 +74,16 @@ def shared_verse_lines(lines):
     def is_speech(line):
         return not not parse_speech(line)
     def is_complete(verse_line):
-        def word_count(speech):
-            return len(parse_speech(speech)['words'].split())
-        return sum(map(word_count, verse_line)) > 5
+        def word_syllables(word):
+            purged = re.sub(r'[^a-zA-Z]', '', word).lower()
+            if purged in dictionary:
+                candidates = dictionary[purged]
+                return len([y for y in candidates[0] if y[-1].isdigit()])
+            else:
+                return len(re.sub(r'[^aeiou]', '', purged))
+        def speech_syllables(speech):
+            return sum(map(word_syllables, parse_speech(speech)['words'].split()))
+        return sum(map(speech_syllables, verse_line)) > 8
     result = []
     verse_line = []
     for i in range(len(lines)):
