@@ -68,13 +68,13 @@ def shared_verse_lines(lines):
         m = re.match(r"^(\\[a-z]+) ([A-Za-z.;,' ?!-]+)\\\\$", line)
         if not m:
             return None
-        return (m.group(1), m.group(2))
+        return {'prefix': m.group(1), 'words': m.group(2)}
     def is_speech(line):
         return not not parse_speech(line)
     def is_complete(verse_line):
         def word_count(speech):
-            return len(parse_speech(speech)[1].split())
-        return sum(map(word_count, verse_line)) > 7
+            return len(parse_speech(speech)['words'].split())
+        return sum(map(word_count, verse_line)) > 5
     result = []
     verse_line = []
     for i in range(len(lines)):
@@ -82,8 +82,11 @@ def shared_verse_lines(lines):
         if is_speech(line):
             verse_line.append(line)
             if is_complete(verse_line):
-                for speech in verse_line:
-                    result.append(speech)
+                result.append(verse_line[0])
+                for j in range(1, len(verse_line)):
+                    current = parse_speech(verse_line[j])
+                    previous = parse_speech(verse_line[j-1])
+                    result.append(r'%s \vinphantom{%s} %s\\' % (current['prefix'], previous['words'], current['words']))
                 verse_line = []
         else:
             result.append(line)
