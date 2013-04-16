@@ -9,7 +9,13 @@ def read():
     return [line.strip() for line in sys.stdin]
 
 def translate(lines):
-    return add_wrapper(convert(fold_stage_directions(scene_stage_directions(filter_text(remove_empty(lines))))))
+    return compose([remove_empty,
+                    filter_text,
+                    scene_stage_directions,
+                    fold_stage_directions,
+                    convert,
+                    shared_verse_lines,
+                    add_wrapper])(lines)
 
 def remove_empty(lines):
     return filter(None, lines)
@@ -55,6 +61,32 @@ def fold_stage_directions(lines):
                 stage_dir = [line]
             else:
                 result.append(line)
+    return result
+
+def shared_verse_lines(lines):
+    def parse_speech(line):
+        m = re.match(r"^(\\[a-z]+) ([A-Za-z.;,' ?!-]+)\\\\$", line)
+        if not m:
+            return None
+        return (m.group(1), m.group(2))
+    def is_speech(line):
+        return not not parse_speech(line)
+    def is_complete(verse_line):
+        def word_count(speech):
+            return len(parse_speech(speech)[1].split())
+        return sum(map(word_count, verse_line)) > 7
+    result = []
+    verse_line = []
+    for i in range(len(lines)):
+        line = lines[i]
+        if is_speech(line):
+            verse_line.append(line)
+            if is_complete(verse_line):
+                for speech in verse_line:
+                    result.append(speech)
+                verse_line = []
+        else:
+            result.append(line)
     return result
 
 def convert(lines):
