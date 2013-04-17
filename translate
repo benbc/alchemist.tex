@@ -73,6 +73,8 @@ def shared_verse_lines(lines):
         return {'prefix': m.group(1) or '', 'words': m.group(2)}
     def is_speech(line):
         return not not parse_speech(line)
+    def speech_words(speech):
+        return parse_speech(speech)['words']
     def is_complete(verse_line):
         def word_syllables(word):
             purged = re.sub(r'[^a-zA-Z]', '', word).lower()
@@ -82,10 +84,14 @@ def shared_verse_lines(lines):
             else:
                 return len(re.sub(r'[^aeiou]', '', purged))
         def speech_syllables(speech):
-            return sum(map(word_syllables, parse_speech(speech)['words'].split()))
+            return sum(map(word_syllables, speech_words(speech).split()))
         return sum(map(speech_syllables, verse_line)) > 8
     def is_same_speaker(line):
         return is_speech(line) and parse_speech(line)['prefix'] == ''
+    def phantom(lines):
+        if not lines:
+            return ''
+        return r'\vinphantom{%s}' % ''.join(map(speech_words, lines))
     result = []
     verse_line = []
     for i in range(len(lines)):
@@ -93,14 +99,14 @@ def shared_verse_lines(lines):
         if is_speech(line):
             verse_line.append(line)
             if is_complete(verse_line) or is_same_speaker(lines[i+1]):
-                result.append(verse_line[0])
-                for j in range(1, len(verse_line)):
+                for j in range(0, len(verse_line)):
                     current = parse_speech(verse_line[j])
-                    previous = ' '.join(map(lambda line: parse_speech(line)['words'], verse_line[0:j]))
-                    result.append(r'%s\vinphantom{%s} %s\\' % (current['prefix'], previous, current['words']))
+                    result.append(r'%s%s %s\\' % (current['prefix'], phantom(verse_line[0:j]), current['words']))
                 verse_line = []
         else:
-            result.append(line)
+            result.append(line) # this will be out of place (too
+            # early) if it is a stage direction in the middle of a
+            # shared line
     return result
 
 def convert(lines):
