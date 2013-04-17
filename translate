@@ -101,21 +101,26 @@ def shared_verse_lines(lines):
         if not speech_lines:
             return ''
         return r'\vinphantom{%s}' % ''.join(map(speech_words, speech_lines))
+    def should_output_verse_line(lines, i, verse_line):
+        return is_complete(verse_line) or \
+               is_at_end(lines, i) or \
+               is_same_speaker(lines[i+1]) or \
+               is_just_non_speech(verse_line)
+    def output_verse_line(result, verse_line):
+        for j in range(0, len(verse_line)):
+            current = verse_line[j]
+            if is_speech(current):
+                previous = verse_line[0:j]
+                result.append(r'%s%s %s\\' % (speech_prefix(current), phantom(previous), speech_words(current)))
+            else:
+                result.append(current)
     result = []
     verse_line = []
     for i in range(len(lines)):
         line = lines[i]
         verse_line.append(line)
-        if is_complete(verse_line) or is_at_end(lines, i) or is_same_speaker(lines[i+1]) or is_just_non_speech(verse_line):
-            for j in range(0, len(verse_line)):
-                current = verse_line[j]
-                if is_speech(current):
-                    previous = verse_line[0:j]
-                    result.append(r'%s%s %s\\' % (speech_prefix(current),
-                                                  phantom(previous),
-                                                  speech_words(current)))
-                else:
-                    result.append(current)
+        if should_output_verse_line(lines, i, verse_line):
+            output_verse_line(result, verse_line)
             verse_line = []
     return result
 
