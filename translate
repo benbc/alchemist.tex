@@ -70,11 +70,15 @@ def shared_verse_lines(lines):
         m = re.match(r"^(\\[a-z]+ )?([A-Za-z.:;,\"' ?!()-]+)\\\\$", line)
         if not m:
             return None
-        return {'prefix': m.group(1) or '', 'words': m.group(2)}
+        return {'prefix': m.group(1), 'words': m.group(2)}
     def is_speech(line):
         return not not parse_speech(line)
     def speech_words(speech):
         return parse_speech(speech)['words']
+    def speech_prefix(speech):
+        return parse_speech(speech)['prefix'] or ''
+    def has_prefix(speech):
+        return not not parse_speech(speech)['prefix']
     def is_complete(verse_line):
         def word_syllables(word):
             purged = re.sub(r'[^a-zA-Z]', '', word).lower()
@@ -85,23 +89,28 @@ def shared_verse_lines(lines):
                 return len(re.sub(r'[^aeiou]', '', purged))
         def speech_syllables(speech):
             return sum(map(word_syllables, speech_words(speech).split()))
-        return sum(map(speech_syllables, verse_line)) > 8
+        return sum(map(speech_syllables, filter(is_speech, verse_line))) > 8
     def is_same_speaker(line):
-        return is_speech(line) and parse_speech(line)['prefix'] == ''
+        return is_speech(line) and not has_prefix(line)
+    def is_just_non_speech(verse_line):
+        return not any(map(is_speech, verse_line))
     def phantom(lines):
-        if not lines:
+        speech_lines = filter(is_speech, lines)
+        if not speech_lines:
             return ''
-        return r'\vinphantom{%s}' % ''.join(map(speech_words, lines))
+        return r'\vinphantom{%s}' % ''.join(map(speech_words, speech_lines))
     result = []
     verse_line = []
     for i in range(len(lines)):
         line = lines[i]
         if is_speech(line):
             verse_line.append(line)
-            if is_complete(verse_line) or is_same_speaker(lines[i+1]):
+            if is_complete(verse_line) or is_same_speaker(lines[i+1]) or is_just_non_speech(verse_line):
                 for j in range(0, len(verse_line)):
-                    current = parse_speech(verse_line[j])
-                    result.append(r'%s%s %s\\' % (current['prefix'], phantom(verse_line[0:j]), current['words']))
+                    current = verse_line[j]
+                    result.append(r'%s%s %s\\' % (speech_prefix(current),
+                                                  phantom(verse_line[0:j]),
+                                                  speech_words(current)))
                 verse_line = []
         else:
             result.append(line) # this will be out of place (too
