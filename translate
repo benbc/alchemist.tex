@@ -94,6 +94,8 @@ def shared_verse_lines(lines):
         return is_speech(line) and not has_prefix(line)
     def is_just_non_speech(verse_line):
         return not any(map(is_speech, verse_line))
+    def is_at_end(lines, i):
+        return i == len(lines)-1
     def phantom(lines):
         speech_lines = filter(is_speech, lines)
         if not speech_lines:
@@ -103,19 +105,18 @@ def shared_verse_lines(lines):
     verse_line = []
     for i in range(len(lines)):
         line = lines[i]
-        if is_speech(line):
-            verse_line.append(line)
-            if is_complete(verse_line) or is_same_speaker(lines[i+1]) or is_just_non_speech(verse_line):
-                for j in range(0, len(verse_line)):
-                    current = verse_line[j]
+        verse_line.append(line)
+        if is_complete(verse_line) or is_at_end(lines, i) or is_same_speaker(lines[i+1]) or is_just_non_speech(verse_line):
+            for j in range(0, len(verse_line)):
+                current = verse_line[j]
+                if is_speech(current):
+                    previous = verse_line[0:j]
                     result.append(r'%s%s %s\\' % (speech_prefix(current),
-                                                  phantom(verse_line[0:j]),
+                                                  phantom(previous),
                                                   speech_words(current)))
-                verse_line = []
-        else:
-            result.append(line) # this will be out of place (too
-            # early) if it is a stage direction in the middle of a
-            # shared line
+                else:
+                    result.append(current)
+            verse_line = []
     return result
 
 def convert(lines):
