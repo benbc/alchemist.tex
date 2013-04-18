@@ -114,7 +114,7 @@ def shared_verse_lines(lines):
         speech_lines = filter(is_speech, lines)
         if not speech_lines:
             return ''
-        return r'\vinphantom{%s}' % ''.join(map(speech_words, speech_lines))
+        return r'\vinphantom{%s} ' % ' '.join(map(speech_words, speech_lines))
     def should_output_verse_line(lines, i, verse_line):
         return is_complete(verse_line) or \
                is_at_end(lines, i) or \
@@ -125,7 +125,7 @@ def shared_verse_lines(lines):
             current = verse_line[j]
             if is_speech(current):
                 previous = verse_line[0:j]
-                result.append(r'%s%s %s\\' % (speech_prefix(current), phantom(previous), speech_words(current)))
+                result.append(r'%s%s%s\\' % (speech_prefix(current), phantom(previous), speech_words(current)))
             else:
                 result.append(current)
     result = []
