@@ -80,16 +80,30 @@ def shared_verse_lines(lines):
     def has_prefix(speech):
         return not not parse_speech(speech)['prefix']
     def is_complete(verse_line):
+        def syllables_from_dictionary(word):
+            candidates = dictionary[word]
+            return len([char for char in candidates[0] if char[-1].isdigit()])
+        def without_terminal_s(word):
+            return re.sub(r's$', '', word)
         def word_syllables(word):
-            purged = re.sub(r'[^a-zA-Z]', '', word).lower()
-            if purged in dictionary:
-                candidates = dictionary[purged]
-                return len([y for y in candidates[0] if y[-1].isdigit()])
+            word = word.lower()
+            word = re.sub(r'[,.!:?;"()]', '', word)
+            word = re.sub(r"'[dst]$", '', word)
+            word = re.sub(r"'(ll|st|n|er|en|lt)$", '', word)
+            word = re.sub(r"t'", '', word)
+            word = re.sub(r"'", '', word)
+            if not word:
+                return 0
+            elif word in dictionary:
+                return syllables_from_dictionary(word)
+            elif without_terminal_s(word) in dictionary:
+                return syllables_from_dictionary(without_terminal_s(word))
             else:
-                return len(re.sub(r'[^aeiou]', '', purged))
+                return len(re.sub(r'[^aeiou]', '', word))
         def speech_syllables(speech):
+            speech = re.sub(r'-', ' ', speech)
             return sum(map(word_syllables, speech_words(speech).split()))
-        return sum(map(speech_syllables, filter(is_speech, verse_line))) > 8
+        return sum(map(speech_syllables, filter(is_speech, verse_line))) > 9
     def is_same_speaker(line):
         return is_speech(line) and not has_prefix(line)
     def is_just_non_speech(verse_line):
