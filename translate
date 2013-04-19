@@ -146,7 +146,8 @@ def convert(lines):
                        [stage_direction,
                         verse,
                         acts,
-                        scenes]),
+                        scenes,
+                        mdashes]),
                lines)
 
 def normalize_prefix_direction_combos(line):
@@ -201,6 +202,9 @@ def acts(line):
 
 def scenes(line):
     return re.sub(r'SCENE.*', r'\\scene\n', line)
+
+def mdashes(line):
+    return re.sub('--', '---', line)
 
 def compose(funs):
     return lambda x: reduce(lambda acc, f: f(acc), funs, x)
