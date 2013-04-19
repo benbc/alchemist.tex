@@ -220,6 +220,8 @@ def prefix():
 \documentclass{memoir}
 \usepackage{dramatist}
 \usepackage{dramatist-mods}
+\raggedbottom
+\raggedright
 
 \begin{document}
 
