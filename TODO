@@ -1,6 +1,7 @@
 Fix lineation from p38 "Drink that..."
 
 reduce margins? (or deal better with overflowing lines) ?smaller font
+  (e.g. p73 who would you speak with / where's the captain / gone, sir)
 
 Branch for my edition, from manual fix branch.
 Do I need to script the process of rebasing the various branches?
