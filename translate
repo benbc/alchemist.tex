@@ -183,7 +183,13 @@ def prefix_defs():
             ('DAME P', 'pliant'),
             ('OFFI', 'officerone'),
             ('1 OFFI', 'officerone'),
-            ('2 OFFI', 'officertwo')]
+            ('2 OFFI', 'officertwo'),
+            ('1 NEI', 'neighone'),
+            ('2 NEI', 'neightwo'),
+            ('3 NEI', 'neighthree'),
+            ('4 NEI', 'neighfour'),
+            ('5 NEI', 'neighfive'),
+            ('6 NEI', 'neighsix')]
 
 def stage_direction(line):
     return re.sub(r'^(.*)\[(.*)\](.*)$', r'\1\\direct*{\2}\3', line)
@@ -237,6 +243,12 @@ def prefix():
 \Character[Ananias, a deacon there]{Ananias}{ananias}
 \Character[Kastril, the angry boy]{Kastril}{kastril}
 \Character[Dame Pliant, his sister, a widow]{Pliant}{pliant}
+\Character[A Neighbour]{Neigh. 1}{neighone}
+\Character[Another Neighbour]{Neigh. 2}{neightwo}
+\Character[Another Neighbour]{Neigh. 3}{neighthree}
+\Character[Another Neighbour]{Neigh. 4}{neighfour}
+\Character[Another Neighbour]{Neigh. 5}{neighfive}
+\Character[Another Neighbour]{Neigh. 6}{neighsix}
 \Character[An officer]{Officer 1}{officerone}
 \Character[Another officer]{Officer 2}{officertwo}
 
