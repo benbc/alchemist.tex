@@ -1,3 +1,6 @@
+Gutenburg edition
+=================
+
 Fix lineation from p106 "so satisfy her grace / here comes the captain"
 
 reduce margins? (or deal better with overflowing lines) ?smaller font
@@ -6,9 +9,16 @@ reduce margins? (or deal better with overflowing lines) ?smaller font
     p78 for what? / why dol's employ'd, you know. / That's true
         mi vida! slid subtle, he puts me in mind of the widow
 
-Branch for my edition, from manual fix branch.
-Do I need to script the process of rebasing the various branches?
+re-format dol raving with mammon/face speaking at the same time
+
+My edition
+==========
 
 Re-distribute fairies' "ti-ti" stuff, so that there is a simultaneous translation, with the verse working.
-Re-check warnings after down-casing the stage directions.
-re-format dol raving with mammon/face speaking at the same time
+Rewrite stage directions:
+ - remove extraneous stuff
+ - simplify locations (inside/outside)
+ - downcase
+ - latex-generated names
+ - don't use speech prefixes to assign actions
+Re-check warnings after rewriting the stage directions.
