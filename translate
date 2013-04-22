@@ -222,8 +222,7 @@ def write(lines):
     print('\n'.join(lines))
 
 def prefix():
-    return r'''
-\documentclass{memoir}
+    return r'''\documentclass[a4paper,oneside]{memoir}
 \usepackage{dramatist}
 \usepackage{dramatist-mods}
 \raggedbottom
