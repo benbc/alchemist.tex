@@ -228,7 +228,7 @@ def prefix():
 \sloppybottom
 \raggedbottom
 \raggedright
-\setlrmarginsandblock{110pt}{110pt}{*}
+\setlrmarginsandblock{90pt}{90pt}{*}
 
 \begin{document}
 
