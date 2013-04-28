@@ -8,8 +8,6 @@ My edition
 ==========
 
 Fix double quotes
-Check text against New Mermaid
- - stage directions
 Cut
  - Cut down the neighbours, officers, chaplain/parson
  - Proper naming for parson if he still exists
@@ -23,6 +21,8 @@ Work out how to designate asides (in brackets?)
 Simplify punctuation
 Get rid of dramatis personae? (keep for auditions?)
 
+Remove srcltx
+Increase margins for stage directions
 Re-check latex warnings
 
 Program:
