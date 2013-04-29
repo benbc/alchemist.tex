@@ -1,11 +1,16 @@
-\documentclass[a4paper,oneside]{memoir}
+\documentclass[a4paper,oneside,12pt]{memoir}
 \usepackage{dramatist}
 \usepackage{dramatist-mods}
 \usepackage{srcltx}
 \sloppybottom
 \raggedbottom
 \raggedright
-\setlrmarginsandblock{90pt}{90pt}{*}
+\setlrmarginsandblock{65pt}{60pt}{*}
+\copypagestyle{play}{plain}
+\makeevenhead{play}{}{\actname \theact \printscenename \printscenenum}{}
+\makeoddhead{play}{}{\textsc{act} \printsep \textsc{\theact}
+  \printsep \textsc{scene} \printsep \thescene}{}
+\pagestyle{play}
 
 \begin{document}
 
@@ -456,7 +461,7 @@ To add consideration.\\
 \facespeaks \vinphantom{To add consideration.} Why then, sir,\\
 I'll try.---\\
 \direct*{To \subtle}
-\vinphantom{I'll try.--} Say that it were for all games, doctor.\\
+\vinphantom{I'll try.---} Say that it were for all games, doctor.\\
 \subtlespeaks I say then, not a mouth shall eat for him\\
 At any ordinary, but on the score,\\
 That is a gaming mouth, conceive me.\\
@@ -656,10 +661,10 @@ That shall yield him such a commodity\\
 Of drugs\\
 \direct*{Pointing to the plan}
 \vinphantom{Of drugs} ---This is the west, and this the south?\\
-\druggerspeaks \vinphantom{Of drugs ---This is the west, and this the south?} Yes, sir.\\
-\subtlespeaks And those are your two sides?\\
-\druggerspeaks \vinphantom{And those are your two sides?} Ay, sir.\\
-\subtlespeaks \vinphantom{And those are your two sides? Ay, sir.} Make me your door, then, south; your broad side, west:\\
+\druggerspeaks Yes, sir.\\
+\subtlespeaks \vinphantom{Yes, sir.} And those are your two sides?\\
+\druggerspeaks \vinphantom{Yes, sir. And those are your two sides?} Ay, sir.\\
+\subtlespeaks Make me your door, then, south; your broad side, west:\\
 And on the east side of your shop, aloft,\\
 Write Mathlai, Tarmiel, and Baraborat;\\
 Upon the north part, Rael, Velel, Thiel.\\
@@ -1573,8 +1578,8 @@ To the trine circle of the seven spheres.\\
 \subtlespeaks What's the proper passion of metals?\\
 \facespeaks \vinphantom{What's the proper passion of metals?} Malleation.\\
 \subtlespeaks What's your ultimum supplicium auri?\\
-\facespeaks Antimonium.\\
-\subtlespeaks \vinphantom{Antimonium.} This is heathen Greek to you!---And what's your mercury?\\
+\facespeaks \vinphantom{What's your ultimum supplicium auri?} Antimonium.\\
+\subtlespeaks This is heathen Greek to you!---And what's your mercury?\\
 \facespeaks A very fugitive, he will be gone, sir.\\
 \subtlespeaks How know you him?\\
 \facespeaks \vinphantom{How know you him?} By his viscosity,\\
