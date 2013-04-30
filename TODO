@@ -1,14 +1,10 @@
 Longest line is:
   Art though well pleased, Nab? / Thank, sir, both your worships. / Away.
-Sort out formating of new scenes/acts
-Sort out title page
 
 Cut
  - Cut down the neighbours, officers, chaplain/parson
  - Proper naming for parson if he still exists
 Re-work act/scene divisions
- - staging description at start of first act
- - make all other stage-dirs into direct*
 Check all entrances and exits to make sure they are consistent; add upstage exit
 
 Re-distribute fairies' "ti-ti" stuff, so that there is a simultaneous translation, with the verse working.
@@ -16,8 +12,6 @@ Work out how to designate asides (in brackets?)
 Simplify punctuation
 
 Remove srcltx
-Increase margins for stage directions
-Re-check latex warnings
 
 Program:
  - argument

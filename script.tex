@@ -9,11 +9,32 @@
 \setulmarginsandblock{50pt}{60pt}{*}
 \checkandfixthelayout
 \copypagestyle{play}{plain}
-\makeevenhead{play}{}{\actname \theact \printscenename \printscenenum}{}
+\makeevenhead{play}{}{}{\actname \theact \printscenename \printscenenum}
 \makeoddhead{play}{}{\textsc{act} \printsep \textsc{\theact}
   \printsep \textsc{scene} \printsep \thescene}{}
 \pagestyle{play}
 \renewcommand{\casttitlename}{The Characters}
+\setlength{\dirwidth}{.70\textwidth}
+
+\makeatletter
+
+\renewcommand{\m@ke@cthead}[1]{}
+
+\renewcommand{\m@kescenehead}[1]{%
+  \sceneheadstart
+      {
+        \huge
+        \textsc{act} \printsep \textsc{\theact}
+        \printsep
+        \textsc{scene} \printsep \thescene
+      }
+      \afterscene
+}
+
+\makeatother
+
+\setlength{\beforesceneskip}{20pt}
+
 
 \begin{document}
 
@@ -21,6 +42,7 @@
 \author{Ben Jonson}
 \date{}
 \maketitle
+\thispagestyle{empty}
 
 \Character[Subtle, the Alchemist]{Subtle}{subtle}
 \Character[Face, the housekeeper]{Face}{face}
@@ -54,11 +76,13 @@
 
 \begin{drama*}
 
+\item \xspace
+
 \act
 
 \scene
 
-\stagedir{Enter \face, \subtle and \dol stage left}
+\direct*{Enter \face, \subtle and \dol stage left}
 \facespeaks Believe it, I will.\\
 \subtlespeaks \vinphantom{Believe it, I will.} Thy worst. I fart at thee.\\
 \dolspeaks Have you your wits? why, gentlemen! for love---\\
@@ -780,7 +804,7 @@ If his dream lasts, he'll turn the age to gold.\\
 
 \scene
 
-\stagedir{Enter \mammon and \surly stage right}
+\direct*{Enter \mammon and \surly stage right}
 \mammonspeaks Come on, sir. Now, you set your foot on shore\\
 In Novo Orbe; here's the rich Peru:\\
 And there within, sir, are the golden mines,\\
@@ -1801,7 +1825,7 @@ Away you, to your Surly yonder, catch him.\\
 
 \scene
 
-\stagedir{Enter \tribulation and \ananias stage right}
+\direct*{Enter \tribulation and \ananias stage right}
 \tribulationspeaks These chastisements are common to the saints,\\
 And such rebukes, we of the separation\\
 Must bear with willing shoulders, as the trials\\
@@ -1859,7 +1883,7 @@ And of the spirit; I will knock first.\\
 \vinphantom{And of the spirit; I will knock first.} Peace be within!\\
 \scene
 
-\stagedir{\subtle enters stage left and opens the door}
+\direct*{\subtle enters stage left and opens the door}
 \subtlespeaks O, are you come? 'twas time. Your threescore minutes\\
 Were at last thread, you see: and down had gone\\
 Furnus acediae, turris circulatorius:\\
@@ -2506,7 +2530,7 @@ Sir Epicure, I am yours, sir, by and by.\\
 
 \scene
 
-\stagedir{\face opens the door to \mammon and lets him in}
+\direct*{\face opens the door to \mammon and lets him in}
 \facespeaks O sir, you're come in the only finest time.---\\
 \mammonspeaks Where's master?\\
 \facespeaks \vinphantom{Where's master?} Now preparing for projection, sir.\\
@@ -3001,7 +3025,7 @@ The quickly doing of it is the grace.\\
 \direct*{Exit \subtle and \surly stage left}
 \scene
 
-\stagedir{Enter \face, \kastril and \pliant stage left}
+\direct*{Enter \face, \kastril and \pliant stage left}
 \facespeaks Come, lady: I knew the Doctor would not leave,\\
 Till he had found the very nick of her fortune.\\
 \kastrilspeaks To be a countess, say you?
@@ -3144,7 +3168,7 @@ I e'er shall quarrel well?\\
 \direct*{Exit \subtle and \kastril}
 \scene
 
-\stagedir{Enter \dol and \mammon stage left}
+\direct*{Enter \dol and \mammon stage left}
 \dolspeaks ``For after Alexander's death''---\\
 \mammonspeaks \vinphantom{``For after Alexander's death''---} Good lady---\\
 \dolspeaks ``That Perdiccas and Antigonus, were slain,\\
@@ -3924,7 +3948,7 @@ Pray you forgive me.\\
 \direct*{\face and \lovewit go inside and exit stage left}
 \scene
 
-\stagedir{Enter \subtle and \dapper stage left, \dapper blindfolded}
+\direct*{Enter \subtle and \dapper stage left, \dapper blindfolded}
 \subtlespeaks How! you have eaten your gag?\\
 \dapperspeaks \vinphantom{How! you have eaten your gag?} Yes faith, it crumbled\\
 Away in my mouth.\\
@@ -4160,7 +4184,7 @@ And haunt thee in the flock-bed and the buttery.\\
 \direct*{\face ushers \subtle and \dol off stage left}
 \scene
 
-\stagedir{Enter \lovewit, dressed as a Spaniard, and the parson stage
+\direct*{Enter \lovewit, dressed as a Spaniard, and the parson stage
   left. \officerone knocks loudly at the door}
 \lovewitspeaks What do you mean, my masters?\\
 \mammonspeaks \vinphantom{What do you mean, my masters?} Open your door,\\
