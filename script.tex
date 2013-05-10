@@ -1,17 +1,13 @@
 \documentclass[a4paper,oneside,12pt]{memoir}
 \usepackage{dramatist}
 \usepackage{dramatist-mods}
-\usepackage{srcltx}
-\sloppybottom
-\raggedbottom
-\raggedright
 \setlrmarginsandblock{65pt}{60pt}{*}
 \setulmarginsandblock{50pt}{60pt}{*}
 \checkandfixthelayout
 \copypagestyle{play}{plain}
 \makeevenhead{play}{}{}{\actname \theact \printscenename \printscenenum}
-\makeoddhead{play}{}{\textsc{act} \printsep \textsc{\theact}
-  \printsep \textsc{scene} \printsep \thescene}{}
+\makeoddhead{play}{}{\textsc{Act} \printsep \textsc{\theact}
+  \printsep \textsc{Scene} \printsep \thescene}{}
 \pagestyle{play}
 \renewcommand{\casttitlename}{The Characters}
 \setlength{\dirwidth}{.70\textwidth}
@@ -24,9 +20,9 @@
   \sceneheadstart
       {
         \huge
-        \textsc{act} \printsep \textsc{\theact}
+        \textsc{Act} \printsep \textsc{\theact}
         \printsep
-        \textsc{scene} \printsep \thescene
+        \textsc{Scene} \printsep \thescene
       }
       \afterscene
 }
@@ -243,6 +239,7 @@ And not be styled Dol Common, but Dol Proper,\\
 Dol Singular: the longest cut at night\\
 Shall draw thee for his Doll Particular.\\
 
+\pagebreak
 \scene
 
 \direct*{\dapper enters outside and knocks}
@@ -1858,6 +1855,7 @@ Only the fumigation's somewhat strong.\\
 Sir Epicure, I am yours, sir, by and by.\\
 \direct*{Exit \subtle, \dol and \dapper inside}
 
+\pagebreak
 \scene
 
 \direct*{\face opens the door to \mammon and lets him in}
@@ -2157,6 +2155,7 @@ Win her and carry her. If you grumble, Dol\\
 Knows it directly.\\
 \facespeaks \vinphantom{Knows it directly.} Well, sir, I am silent.\\
 
+\pagebreak
 \scene
 
 \facespeaks Will you go help to fetch in Don in state?\\
@@ -2363,6 +2362,7 @@ I e'er shall quarrel well?\\
 \subtlespeaks \vinphantom{I e'er shall quarrel well?} I warrant you.\\
 \direct*{Exit \subtle and \kastril inside}
 
+\pagebreak
 \scene
 
 \direct*{Enter \dol and \mammon inside}
@@ -2695,6 +2695,7 @@ Let Mammon's brass and pewter keep the cellar;\\
 We'll have another time for that. Now go!\\
 \direct*{Exit \face, \subtle and \dol inside}
 
+\pagebreak
 \scene
 
 \lovewitspeaks Has there been such resort, say you?\\
